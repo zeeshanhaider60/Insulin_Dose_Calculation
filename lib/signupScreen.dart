@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:insulin_dose_calculation/loginScreen.dart';
-// import 'package:dropdown_button2/dropdown_button2.dart';
 
 class signupScreen extends StatefulWidget {
   @override
@@ -141,7 +140,7 @@ class _signupScreenState extends State<signupScreen> {
                       onPressed: () async {
                         if (diabetesTypeController.text == "Type 2") {
                           Fluttertoast.showToast(
-                              msg: 'This app is not for Type 2 diabetes');
+                              msg: 'This app is not for Type 2s');
                           return;
                         }
                         if (_formKey.currentState?.validate() ?? false) {

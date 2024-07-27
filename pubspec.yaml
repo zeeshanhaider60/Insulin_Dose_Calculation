@@ -40,6 +40,7 @@ dependencies:
   firebase_auth: ^4.20.0
   shared_preferences: ^2.2.3
   firebase_core: ^2.31.1
+  http: ^0.13.3
 
 dev_dependencies:
   flutter_test:
@@ -71,6 +72,7 @@ flutter:
     - assets/key.png
     - assets/login.png
     - assets/Signup_Icon.png
+    - assets/reset-password.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

@@ -54,12 +54,6 @@ class _MyAppState extends State<MyApp> {
         // home: splashScreen(),
         home: user != null ? insulinDosePage() : splashScreen(),
         // initialRoute: '/splashscreen',
-        routes: {
-          '/splashscreen': (context) => splashScreen(),
-          '/login': (context) => loginScreen(),
-          '/signup': (context) => signupScreen(),
-          '/home': (context) => insulinDosePage(),
-        },
       ),
     );
   }

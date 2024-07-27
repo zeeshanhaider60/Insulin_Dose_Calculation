@@ -1,9 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:insulin_dose_calculation/loginScreen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:insulin_dose_calculation/Controllers/insulinDosePageController.dart';
 import 'package:insulin_dose_calculation/Controllers/mealDoseCalulationPageController.dart';
 
 class mealDoseCalculationPage extends StatelessWidget {
+  final _auth = FirebaseAuth.instance;
+
+  Future<void> _logout(BuildContext context) async {
+    try {
+      await _auth.signOut();
+      Fluttertoast.showToast(msg: 'Logged out successfully');
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => loginScreen()),
+      );
+    } catch (e) {
+      Fluttertoast.showToast(msg: 'Error Occured: Could not log out');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final mealdosecalculationpagecontroller =
@@ -173,6 +191,15 @@ class mealDoseCalculationPage extends StatelessWidget {
                         ],
                       ),
                     )),
+                SizedBox(
+                  height: 100,
+                ),
+                TextButton(
+                  onPressed: () {
+                    _logout(context);
+                  },
+                  child: Text('Do you want to logout'),
+                ),
               ],
             ),
           ),

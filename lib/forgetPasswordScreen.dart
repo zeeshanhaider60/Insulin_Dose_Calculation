@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:insulin_dose_calculation/insulinDosePage.dart';
-import 'package:insulin_dose_calculation/signupScreen.dart';
-import 'package:insulin_dose_calculation/forgetPasswordScreen.dart';
 
-class loginScreen extends StatelessWidget {
+class ForgetPasswordScreen extends StatelessWidget {
   final _auth = FirebaseAuth.instance;
   final _formKey = GlobalKey<FormState>();
   final emailController = TextEditingController();
-  final passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text('Forgot Password'),
+      ),
       body: Center(
         child: SingleChildScrollView(
           child: Form(
@@ -24,15 +23,15 @@ class loginScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   CircleAvatar(
-                    radius: 70,
+                    radius: 80,
                     backgroundColor: Colors.white,
-                    backgroundImage: AssetImage('assets/key.png'),
+                    backgroundImage: AssetImage('assets/reset-password.png'),
                   ),
                   SizedBox(
                     height: 35,
                   ),
                   Text(
-                    'Wellcome to Insulin Dose Calculation App',
+                    'Reset Your Password',
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
                   ),
                   SizedBox(
@@ -55,26 +54,6 @@ class loginScreen extends StatelessWidget {
                     },
                   ),
                   SizedBox(
-                    height: 15,
-                  ),
-                  TextFormField(
-                    controller: passwordController,
-                    decoration: InputDecoration(
-                      labelText: 'Password',
-                      hintText: 'Enter Your Password',
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                    ),
-                    obscureText: true,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter your password';
-                      }
-                      return null;
-                    },
-                  ),
-                  SizedBox(
                     height: 20,
                   ),
                   SizedBox(
@@ -84,20 +63,16 @@ class loginScreen extends StatelessWidget {
                       onPressed: () async {
                         if (_formKey.currentState?.validate() ?? false) {
                           try {
-                            await _auth.signInWithEmailAndPassword(
+                            await _auth.sendPasswordResetEmail(
                               email: emailController.text,
-                              password: passwordController.text,
                             );
-                            Fluttertoast.showToast(msg: 'Login successful');
-                            Navigator.pushReplacement(
-                                // ignore: use_build_context_synchronously
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => insulinDosePage(),
-                                ));
+                            Fluttertoast.showToast(
+                                msg: 'Password reset email sent');
+                            Navigator.pop(context);
                           } catch (e) {
                             Fluttertoast.showToast(
-                                msg: 'Please Enter Correct Email and Password');
+                                msg:
+                                    'Error Occured: Could not send password reset email');
                           }
                         }
                       },
@@ -110,37 +85,13 @@ class loginScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            'Login ',
+                            'Reset Password ',
                             style: TextStyle(fontSize: 20),
                           ),
                           Icon(Icons.arrow_forward),
                         ],
                       ),
                     ),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => signupScreen(),
-                          ));
-                    },
-                    child: Text('Don\'t have an account? Signup'),
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => ForgetPasswordScreen(),
-                        ),
-                      );
-                    },
-                    child: Text('Forgot Password?'),
                   ),
                 ],
               ),
